@@ -17,16 +17,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
+        handleUserName()
+
         binding.btnNewPhrase.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {
         when(view.id) {
-            R.id.btn_new_phrase -> function()
+            R.id.btn_new_phrase -> TODO()
         }
     }
 
-    private fun function(){
-        TODO()
+    private fun handleUserName(){
+        val name = SecurityPreferences(this).getString("USER_NAME")
+        binding.textUserName.text = "Olá, $name!"
     }
 }
