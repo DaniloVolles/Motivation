@@ -6,13 +6,14 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.motivation.infra.MotivationConstants
 import com.example.motivation.R
+import com.example.motivation.data.Mock
 import com.example.motivation.infra.SecurityPreferences
 import com.example.motivation.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityMainBinding
-    private var categoryId = 0
+    private var categoryId = MotivationConstants.FILTER.ALL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,8 +23,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         supportActionBar?.hide()
 
+        // Quando o aplicativo iniciar, ele já vai agilizar isso aqui
         handleUserName()
         handleFilter(R.id.image_all)
+        handleNextPhrase()
 
         binding.btnNewPhrase.setOnClickListener(this)
         binding.imageAll.setOnClickListener(this)
@@ -33,10 +36,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         if (view.id == R.id.btn_new_phrase) {
-            TODO()
+            handleNextPhrase()
         } else if (view.id in listOf(R.id.image_all, R.id.image_happy, R.id.image_sunny)) {
             handleFilter(view.id)
         }
+    }
+
+    private fun handleNextPhrase() {
+        binding.textPhrase.text = Mock().getPhrase(categoryId)
     }
 
     private fun handleFilter(id: Int) {
